@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
     public Rigidbody2D rb; //RIGID BODY OF THE PLAYER
@@ -48,128 +48,133 @@ public class PlayerController : MonoBehaviour
     public float jumpOfWallDuration; //DURATION OF GIVING THE PLAYER VELOCITY AFTER JUMPING OF WALL
     private float _jumpOfWallCounter; //COUNTER THAT MONITORS FOR HOW MUCH LONGER THE VELOCITY IS BEING GIVEN TO THE PLAYER AFTER WALL JUMPING
     public float jumpOfWallVelocity; //VELOCITY GIVEN TO THE PLAYER AFTER WALL JUMPING
-    private bool _canMove; //IF TRUE, THE PLAYER HAS CONTROL OVER HIS CHARACRER, IF FALSE THE INPUT IS BLOCKED
+    public bool canMove; //IF TRUE, THE PLAYER HAS CONTROL OVER HIS CHARACRER, IF FALSE THE INPUT IS BLOCKED
     public float minimumJumpOfWall; //MINIMUM DURATION OF WALL JUMPING
     public Animator anim;
+    private PlayersAbilityTracker _abilities;
 
     // Start is called before the first frame update
     void Start()
     {
-        _canMove = true;
+        _abilities = GetComponent<PlayersAbilityTracker>();
+
+        canMove = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //CHECKING IF THE PLAYER IS ON THE GROUND
-        isOnGround = Physics2D.OverlapCircle(groundPoint.transform.position, .2f, ground);
+        if(canMove){
+            //CHECKING IF THE PLAYER IS ON THE GROUND
+            isOnGround = Physics2D.OverlapCircle(groundPoint.transform.position, .2f, ground);
 
-        //CHECKING IF THE PLAYER IS SLIDING AGAINST THE WALL
-        isAgainstWall = Physics2D.OverlapCircle(wallPoint.transform.position, .2f, ground);
+            //CHECKING IF THE PLAYER IS SLIDING AGAINST THE WALL
+            isAgainstWall = Physics2D.OverlapCircle(wallPoint.transform.position, .2f, ground);
 
-        //CHECKING IF THE PLAYER CAN JUMP OF WALL
-        isntFacingWall = Physics2D.OverlapCircle(wallBackPoint.transform.position, .2f, ground);
+            //CHECKING IF THE PLAYER CAN JUMP OF WALL
+            isntFacingWall = Physics2D.OverlapCircle(wallBackPoint.transform.position, .2f, ground);
 
-        //REACHARGING DASH
-        if(_dashRechargeCounter > 0)
-        {
-            _dashRechargeCounter -= Time.deltaTime;
-        }
-        else if(_dashRechargeCounter <= 0) //GETTING DASH INPUT FROM THE PLAYER
-        {
-            if(Input.GetButtonDown("Fire2"))
+            //REACHARGING DASH
+            if(_dashRechargeCounter > 0)
             {
-                _dashCounter = dashDuration;
-                _justDashed = true;
+                _dashRechargeCounter -= Time.deltaTime;
             }
-        }
-
-        //DASHING
-        if(_dashCounter > 0)
-        {
-            _dashCounter -= Time.deltaTime;
-            rb.velocity = new Vector3(rb.transform.localScale.x * dashMovementSpeed, 0);
-            _dashRechargeCounter = dahsCooldown;
-        }
-        else
-        {
-            if(_justDashed)
+            else if(_dashRechargeCounter <= 0) //GETTING DASH INPUT FROM THE PLAYER
             {
-                StartCoroutine(DashFloatRoutine());
-                _justDashed = false;
+                if(Input.GetButtonDown("Fire2") && _abilities.canDash)
+                {
+                    _dashCounter = dashDuration;
+                    _justDashed = true;
+                }
             }
 
-            //AD MOVEMENT (GIVING THE RIGID BODY VELOCITY EQUAL TO INPUT TIMES MOVEMENT SPEED)
-            if(_canMove)
+            //DASHING
+            if(_dashCounter > 0)
             {
-                rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * movementSpeed,rb.velocity.y);
-            }
-            if(rb.velocity.x > 0f)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if(rb.velocity.x < 0f)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-        }
-
-        //CHECKING IF THE PLAYER CAN JUMP OF WALL
-        if(!isOnGround && (isntFacingWall || isAgainstWall) && Input.GetAxisRaw("Horizontal") != 0)
-        {
-            canJumpOfWall = true;
-        }
-        else
-        {
-            canJumpOfWall = false;
-        }
-
-        //JUMPING/ DOUBLE JUMPING
-        if(Input.GetButtonDown("Jump") && (isOnGround || _canDoubleJump || (canJumpOfWall && Input.GetAxisRaw("Horizontal") != 0)))
-        {
-            if(isOnGround || canJumpOfWall)
-            {
-                _canDoubleJump = true;
+                _dashCounter -= Time.deltaTime;
+                rb.velocity = new Vector3(rb.transform.localScale.x * dashMovementSpeed, 0);
+                _dashRechargeCounter = dahsCooldown;
             }
             else
             {
-                _canDoubleJump = false;
+                if(_justDashed)
+                {
+                    StartCoroutine(DashFloatRoutine());
+                    _justDashed = false;
+                }
+
+                //AD MOVEMENT (GIVING THE RIGID BODY VELOCITY EQUAL TO INPUT TIMES MOVEMENT SPEED)
+                
+                
+                    rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * movementSpeed,rb.velocity.y);
+                
+                if(rb.velocity.x > 0f)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+                else if(rb.velocity.x < 0f)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1);
+                }
             }
 
-            if(isAgainstWall && Input.GetAxis("Horizontal") != 0)
+            //CHECKING IF THE PLAYER CAN JUMP OF WALL
+            if(!isOnGround && (isntFacingWall || isAgainstWall) && Input.GetAxisRaw("Horizontal") != 0 && _abilities.canWallJump)
             {
-                _jumpOfWallCounter = jumpOfWallDuration;
+                canJumpOfWall = true;
             }
             else
             {
-                rb.velocity = new Vector3(rb.velocity.x, jumpForce);
-            }
-        }
-
-        //JUMPING OF WALL
-        if(_jumpOfWallCounter > 0)
-        {
-            StartCoroutine(JumpingOfWallRoutine());
-            _jumpOfWallCounter -= Time.deltaTime;
-            if(Input.GetAxis("Horizontal") != 0)
-            {
-                _jumpOfWallCounter = 0;
+                canJumpOfWall = false;
             }
 
-            if(transform.localScale.x > 0)
+            //JUMPING/ DOUBLE JUMPING
+            if(Input.GetButtonDown("Jump") && (isOnGround || (_canDoubleJump && _abilities.canDoubleJump) || (canJumpOfWall && Input.GetAxisRaw("Horizontal") != 0)))
             {
-                rb.velocity = new Vector2(-jumpOfWallVelocity, jumpForce);
-            }   
-            else
-            {
-                rb.velocity = new Vector2(jumpOfWallVelocity, jumpForce);
+                if(isOnGround || canJumpOfWall)
+                {
+                    _canDoubleJump = true;
+                }
+                else
+                {
+                    _canDoubleJump = false;
+                }
+
+                if(isAgainstWall && Input.GetAxis("Horizontal") != 0 && _abilities.canWallJump && !isOnGround)
+                {
+                    _jumpOfWallCounter = jumpOfWallDuration;
+                }
+                else
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, jumpForce);
+                }
             }
-        }
-        
-        //SLIDING THE PLAYER ON THE WALL
-        if(isAgainstWall && !isOnGround && !Input.GetButtonDown("Jump") && rb.velocity.y <= 0 && Input.GetAxisRaw("Horizontal") != 0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, wallSlideSpeed);
+
+            //JUMPING OF WALL
+            if(_jumpOfWallCounter > 0)
+            {
+                StartCoroutine(JumpingOfWallRoutine());
+                _jumpOfWallCounter -= Time.deltaTime;
+                if(Input.GetAxis("Horizontal") != 0)
+                {
+                    _jumpOfWallCounter = 0;
+                }
+
+                if(transform.localScale.x > 0)
+                {
+                    rb.velocity = new Vector2(-jumpOfWallVelocity, jumpForce);
+                }   
+                else
+                {
+                    rb.velocity = new Vector2(jumpOfWallVelocity, jumpForce);
+                }
+            }
+            
+            //SLIDING THE PLAYER ON THE WALL
+            if(isAgainstWall && !isOnGround && !Input.GetButtonDown("Jump") && rb.velocity.y <= 0 && Input.GetAxisRaw("Horizontal") != 0 && _abilities.canWallJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, wallSlideSpeed);
+            }
         }
 
         //GIVING THE ANIMATOR INFORMATION ABOUT VELOCITY
@@ -187,9 +192,9 @@ public class PlayerController : MonoBehaviour
     //JUMPING OF THE WALL BY A MINIMUM DISTANCE
     IEnumerator JumpingOfWallRoutine()
     {
-        _canMove = false;
+        canMove = false;
         yield return new WaitForSeconds(minimumJumpOfWall);
-        _canMove = true;
+        canMove = true;
 
     }
 }
