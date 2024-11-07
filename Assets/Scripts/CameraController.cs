@@ -22,13 +22,13 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //FOLLOWING THE PLAYER WITH THE CAMERA IN BOUNDS
+        //GETTING THE PLAYERS POSITION, ASIGNING IT TO THE CAMERA AND CLAMPING IT IN BOUNDS
         if(_player)
         {
             transform.position = new Vector3(
                 Mathf.Clamp(_player.transform.position.x, cameraBounds.bounds.min.x + _halfWidth, cameraBounds.bounds.max.x - _halfWidth),
                 Mathf.Clamp(_player.transform.position.y, cameraBounds.bounds.min.y + _halfHeight, cameraBounds.bounds.max.y - _halfHeight),
-                -10f
+                -10f //KEEPING THE CAMERA AWAY ON THE Z AXIS SO THAT IT CAN SEE THE SCENE AT ALL TIMES
             );
         }
     }
