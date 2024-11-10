@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class RespawnController : MonoBehaviour
 {
     public static RespawnController instance; //CREATING AN INSTANCE OF THIS SCRIPT SO THAT IT CAN BE EASILY ACCESSED FROM ANYWHERE
+
+    private GameObject _player; //REFERENCE TO THE PLAYER
     private void Awake() 
     {
         if(!instance) //IF THERE IS NO INSTANCE YET
@@ -19,9 +21,9 @@ public class RespawnController : MonoBehaviour
         }
     }
 
+    //[SerializeField]
     private Vector3 _respawnPoint; //POINT AT WHICH THE PLAYER WILL RESPAWN AFTER DYING OR LOADING INTO ANOTHER SCENE
     public float waitToRespawn; //TIME THE PLAYER MUST WAIT FOR IN ORDER TO RESPAWN
-    private GameObject _player; //REFERENCE TO THE PLAYER
     public GameObject deathEffect; //EFFECT THAT IS BEING CREATED UPON THE PLAYER DYING
 
     // Start is called before the first frame update

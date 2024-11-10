@@ -6,8 +6,15 @@ using UnityEngine.SceneManagement;
 public class DoorController : MonoBehaviour
 {
     private PlayerController _player; //REFERENCE TO THE PLAYER CONTROLLER SO THAT PLAYER'S MOVEMENT CAN BE DISABLED UPOON ENTERING A DOORWAY
+    private Transform _exitPoint; //POINT TO WHICH THE PLAYER IS BEING TRANSPORTED UPON GOING THROUGH A DOORWAY
+
+    private void Awake() 
+    {
+        _exitPoint = GameObject.Find("Exit Point").GetComponent<Transform>();
+    }
+
+    //[SerializeField]
     private bool _playerExiting; //TRUE IF THE PLAYER IS ALREADY EXITING THROUGH A DOORWAY
-    public Transform exitPoint; //POINT TO WHICH THE PLAYER IS BEING TRANSPORTED UPON GOING THROUGH A DOORWAY
     public float movePlayerSpeed; //SPEED OF BEING TRANSPORTED THROUGH A DOORWAY
     public string levelToLoad; //NAME OF A SCENE THAT IS BEING LOADED UPON EXITING THROUGH THIS DOORWAY
 
@@ -22,7 +29,7 @@ public class DoorController : MonoBehaviour
     {
         if(_playerExiting) //IF THE PLAYER IS EXITING, MOVE HIM FROM HIS CURRENT POSITION TOWARDS THE EXIT POINT AT SAID SPEED
         {
-            _player.transform.position = Vector3.MoveTowards(_player.transform.position, exitPoint.transform.position, movePlayerSpeed * Time.deltaTime);
+            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _exitPoint.transform.position, movePlayerSpeed * Time.deltaTime);
         }
     }
 
@@ -43,15 +50,15 @@ public class DoorController : MonoBehaviour
     {
         _playerExiting = true; //SETTING THIS VARIABLE AS TRUE SO THAT THIS COROUTINE ISN'T STARTED EACH FRAME THE PLAYER IS EXITING
 
-        _player.anim.enabled = false; //FREEZING PLAYER'S CURRENT SPRITE (DESIGN CHOICE, CAN BE CHANGED)
+        _player.StopResumeAnim(); //FREEZING PLAYER'S CURRENT SPRITE (DESIGN CHOICE, CAN BE CHANGED)
 
         UIController.instance.StartFadeToBlack(); //CONTACTING THE UI CONTROLLER AND STARTING FADING TO BLACK
 
         yield return new WaitForSeconds(1.5f); //WAITING FOR SOME TIME SO THAT THE PLAYER CAN BE MOVED TO HIS DESTINATION
 
-        RespawnController.instance.SetSpawn(exitPoint.position); //CONTACTING RESPAWN MANAGER AND SETTING PLAYER'S SPAWN TO HIS CURRENT POSITION
+        RespawnController.instance.SetSpawn(_exitPoint.position); //CONTACTING RESPAWN MANAGER AND SETTING PLAYER'S SPAWN TO HIS CURRENT POSITION
         _player.canMove = true; //UNFREEZING PLAYER'S MOVEMENT AND SPRITE
-        _player.anim.enabled = true;
+        _player.StopResumeAnim();
 
         UIController.instance.StartFadeFromBlack(); //FADING BACK FROM BLACK
 

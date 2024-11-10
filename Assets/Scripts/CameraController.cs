@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public BoxCollider2D cameraBounds; //BOUNDS OF THE CAMERA MOVEMENT
-    private float _halfWidth, _halfHeight; //HALF WIDTH AND HALF HEIGHT OF THE CAMERA
     private PlayerController _player; //REFERENCE TO THE PLAYER SCRIPT
+    private BoxCollider2D _cameraBounds; //BOUNDS OF THE CAMERA MOVEMENT
+
+    private void Awake() 
+    {
+        _cameraBounds = GameObject.Find("Camera Bounds").GetComponent<BoxCollider2D>();    
+    }
+
+    //[SerializeField]
+    private float _halfWidth, _halfHeight; //HALF WIDTH AND HALF HEIGHT OF THE CAMERA
 
     // Start is called before the first frame update
     void Start()
     {
         //SETTING THE STARTING POSITION OF THE CAMERA ON THE PLAYER
-        _player = GameObject.Find("Player").GetComponent<PlayerController>();
+        _player = PlayerController.instance;
 
         //GETTING THE OTHER VARIABLES
         _halfHeight = Camera.main.orthographicSize;
@@ -26,8 +33,8 @@ public class CameraController : MonoBehaviour
         if(_player)
         {
             transform.position = new Vector3(
-                Mathf.Clamp(_player.transform.position.x, cameraBounds.bounds.min.x + _halfWidth, cameraBounds.bounds.max.x - _halfWidth),
-                Mathf.Clamp(_player.transform.position.y, cameraBounds.bounds.min.y + _halfHeight, cameraBounds.bounds.max.y - _halfHeight),
+                Mathf.Clamp(_player.transform.position.x, _cameraBounds.bounds.min.x + _halfWidth, _cameraBounds.bounds.max.x - _halfWidth),
+                Mathf.Clamp(_player.transform.position.y, _cameraBounds.bounds.min.y + _halfHeight, _cameraBounds.bounds.max.y - _halfHeight),
                 -10f //KEEPING THE CAMERA AWAY ON THE Z AXIS SO THAT IT CAN SEE THE SCENE AT ALL TIMES
             );
         }

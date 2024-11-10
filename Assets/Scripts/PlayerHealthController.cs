@@ -22,10 +22,12 @@ public class PlayerHealthController : MonoBehaviour
     public int currentHealth; 
     public int maxHealth; //MAXIMUM HEALTH THAT THE PLAYER CAN HAVE 
     public float invincibilityLength; //DURATION OF I-FRAMES AFTER BEING DAMAGED
+    //[SerializeField]
     private float _invincibilityCounter; //COUNTER THAT MONITORS FOR HOW LONG THE PLAYER WILL HAVE I-FRAMES
     
     public float flashLength; //DURATION OF SINGULAR FLASH OF PLAYER'S SPRITE INDICATING THAT THE PLAYER GOT HIT
-    private float _flashCounter; //
+    //[SerializeField]
+    private float _flashCounter; //COUNTER THAT MONITORS TIME BETWEN SPRITE'S FLASHING WHILE I-FRAMES
 
     public SpriteRenderer[] playerSprites; //ARRAY OF PLAYER SPRITE SO THAT THEY CAN BE TURNED ON AND OFF AFTER GETTING DAMAGED
 

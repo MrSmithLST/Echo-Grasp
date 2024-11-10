@@ -153,7 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068a8c998e6e6264da63f717a8973334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitPoint: {fileID: 197005834}
   movePlayerSpeed: 10
   levelToLoad: Testing Scene 1
 --- !u!61 &180489509
@@ -5210,7 +5209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 197005834}
   m_Layer: 0
-  m_Name: ExitPoint
+  m_Name: Exit Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5556,7 +5555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9772358d53e837d41b2cdcb1e0e2b666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraBounds: {fileID: 1254519451}
 --- !u!1 &860322386
 GameObject:
   m_ObjectHideFlags: 0
@@ -5896,7 +5894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319b8287e5100bc469db2770740b54e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeScreen: {fileID: 860322388}
   fadeSpeed: 2
 --- !u!1 &1254519450
 GameObject:
@@ -6123,7 +6120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1528710023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6700001, y: -3.9499998, z: 0}
+  m_LocalPosition: {x: 1.0799999, y: -3.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6146,33 +6143,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d675609a0a9cd84b9e2d27c4f526ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1528710024}
   movementSpeed: 8
   jumpForce: 20
-  groundPoint: {fileID: 428951073}
-  isOnGround: 0
   ground:
     serializedVersion: 2
     m_Bits: 8
   dashDuration: 0.18
   dahsCooldown: 0.5
-  _dashCounter: 0
-  _dashRechargeCounter: 0
   dashMovementSpeed: 50
   floatDuration: 0.02
-  wallPoint: {fileID: 1529003223}
-  isAgainstWall: 0
-  _canDoubleJump: 0
-  canJumpOfWall: 0
-  isntFacingWall: 0
   gravityScale: 5
   wallSlideSpeed: -4
-  wallBackPoint: {fileID: 990501516}
   jumpOfWallDuration: 0.3
   jumpOfWallVelocity: 10
   canMove: 0
   minimumJumpOfWall: 0.1
-  anim: {fileID: 319226061}
 --- !u!114 &1528710029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6185,9 +6170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc554bc154769c44b3b7d52147419c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDoubleJump: 1
-  canDash: 1
-  canWallJump: 1
+  canDoubleJump: 0
+  canDash: 0
+  canWallJump: 0
 --- !u!70 &1528710030
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
