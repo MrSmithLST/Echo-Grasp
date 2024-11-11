@@ -35,11 +35,11 @@ public class PlayerController : MonoBehaviour
 
         _rb = GetComponent<Rigidbody2D>();  //ASSIGNING THE RIGID BODY TO THIS SCRIPT
 
-        _groundPoint  = GameObject.Find("Ground Point").GetComponent<Transform>(); //ASSIGNING THE OTHER VARIABLES
+        //_groundPoint  = GameObject.Find("Ground Point").GetComponent<Transform>(); //ASSIGNING THE OTHER VARIABLES
 
-        _wallPoint = GameObject.Find("Wall Point").GetComponent<Transform>();
+       // _wallPoint = GameObject.Find("Wall Point").GetComponent<Transform>();
 
-        _wallBackPoint = GameObject.Find("Wall Back Point").GetComponent<Transform>();
+       // _wallBackPoint = GameObject.Find("Wall Back Point").GetComponent<Transform>();
 
         _anim = GameObject.Find("Sprite").GetComponent<Animator>();
 
@@ -223,13 +223,6 @@ public class PlayerController : MonoBehaviour
 
     public void StopResumeAnim() //CHANGES THE CURRENT STATE OF THE ANIMATOR
     {
-        if(_anim.enabled)
-        {
-            _anim.enabled = false;
-        }
-        else
-        {
-            _anim.enabled = true;
-        }
+        _anim.enabled = !_anim.enabled;
     }
 }

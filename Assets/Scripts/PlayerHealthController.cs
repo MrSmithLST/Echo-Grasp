@@ -19,22 +19,24 @@ public class PlayerHealthController : MonoBehaviour
         }
     }
 
-    public int currentHealth; 
-    public int maxHealth; //MAXIMUM HEALTH THAT THE PLAYER CAN HAVE 
-    public float invincibilityLength; //DURATION OF I-FRAMES AFTER BEING DAMAGED
-    //[SerializeField]
+    [Header("Health")]
+    [SerializeField] private int _currentHealth; 
+    [SerializeField] private int _maxHealth; //MAXIMUM HEALTH THAT THE PLAYER CAN HAVE 
+
+
+    [Header("Invincibility")]
+    [SerializeField] private float _invincibilityLength; //DURATION OF I-FRAMES AFTER BEING DAMAGED
+    [SerializeField] private float _flashLength; //DURATION OF SINGULAR FLASH OF PLAYER'S SPRITE INDICATING THAT THE PLAYER GOT HIT
+    [SerializeField] private SpriteRenderer[] _playerSprites; //ARRAY OF PLAYER SPRITE SO THAT THEY CAN BE TURNED ON AND OFF AFTER GETTING DAMAGED
     private float _invincibilityCounter; //COUNTER THAT MONITORS FOR HOW LONG THE PLAYER WILL HAVE I-FRAMES
     
-    public float flashLength; //DURATION OF SINGULAR FLASH OF PLAYER'S SPRITE INDICATING THAT THE PLAYER GOT HIT
-    //[SerializeField]
     private float _flashCounter; //COUNTER THAT MONITORS TIME BETWEN SPRITE'S FLASHING WHILE I-FRAMES
 
-    public SpriteRenderer[] playerSprites; //ARRAY OF PLAYER SPRITE SO THAT THEY CAN BE TURNED ON AND OFF AFTER GETTING DAMAGED
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth; 
+        _currentHealth = _maxHealth; 
 
         //update health
     }
@@ -50,16 +52,16 @@ public class PlayerHealthController : MonoBehaviour
 
             if(_flashCounter <= 0) //TURN EACH SPRITE ON AND OFF AFTER THE TIMER HAS REACHED ZERO AND THEN RESET THE TIMER
             {
-                foreach(SpriteRenderer sr in playerSprites)
+                foreach(SpriteRenderer sr in _playerSprites)
                 {
                     sr.enabled = !sr.enabled;
                 }
-                _flashCounter = flashLength;
+                _flashCounter = _flashLength;
             }
 
             if(_invincibilityCounter <= 0)
             {
-                foreach(SpriteRenderer sr in playerSprites) //MAKE SURE THAT AFTER THE I-FRAMES RAN OUT, THE PLAYER SPRITE IS TURNED ON AND RESET THE FLASH TIMER
+                foreach(SpriteRenderer sr in _playerSprites) //MAKE SURE THAT AFTER THE I-FRAMES RAN OUT, THE PLAYER SPRITE IS TURNED ON AND RESET THE FLASH TIMER
                 {
                     sr.enabled = true;
                 }
@@ -72,17 +74,17 @@ public class PlayerHealthController : MonoBehaviour
     {
         if(_invincibilityCounter <= 0) //ONLY IF THE PLAYER ISN'T CURRENTLY INVINCIBLE
         {
-            currentHealth -= damageAmount; //SUBSTRACT THE DAMAGE
+            _currentHealth -= damageAmount; //SUBSTRACT THE DAMAGE
 
-            if(currentHealth <= 0) //IF THE PLAYER DIED MAKE SURE HIS HEALTH IS SET TO ZERO AND CONTACT RESPAWN CONTROLLER IN ORDER TO INITIATE RESPAWNING
+            if(_currentHealth <= 0) //IF THE PLAYER DIED MAKE SURE HIS HEALTH IS SET TO ZERO AND CONTACT RESPAWN CONTROLLER IN ORDER TO INITIATE RESPAWNING
             {
-                currentHealth = 0;
+                _currentHealth = 0;
 
                 RespawnController.instance.Respawn();
             }
             else //IF THE PLAYER SURVIVED, GIVE HIM I-FRAMES
             {
-                _invincibilityCounter = invincibilityLength;
+                _invincibilityCounter = _invincibilityLength;
             }
 
             //update health
@@ -91,18 +93,18 @@ public class PlayerHealthController : MonoBehaviour
 
     public void RefillHealth() //REFILLS PLAYER;S HEALTH, CURRENTLY USED AFTER RESPAWNING
     {
-        currentHealth = maxHealth;
+        _currentHealth = _maxHealth;
 
         //update health
     }
 
     public void HealPlayer(int healAmount) //HEALS THE PLAYER BY ADDING HEAL AMOUNT TO HIS CURRENT HEALTH
     {
-        currentHealth += healAmount;
+        _currentHealth += healAmount;
 
-        if(currentHealth > maxHealth) //MAKE SURE THAT THE CURRENT HEALTH DOESN'T EXCEED THE MAX HEALTH
+        if(_currentHealth > _maxHealth) //MAKE SURE THAT THE CURRENT HEALTH DOESN'T EXCEED THE MAX HEALTH
         {
-            currentHealth = maxHealth;
+            _currentHealth = _maxHealth;
         }
 
         //update health

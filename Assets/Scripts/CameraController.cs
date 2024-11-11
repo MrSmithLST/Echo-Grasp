@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private PlayerController _player; //REFERENCE TO THE PLAYER SCRIPT
+    private Player _player; //REFERENCE TO THE PLAYER SCRIPT
     private BoxCollider2D _cameraBounds; //BOUNDS OF THE CAMERA MOVEMENT
 
     private void Awake() 
@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         //SETTING THE STARTING POSITION OF THE CAMERA ON THE PLAYER
-        _player = PlayerController.instance;
+        _player = Player.instance;
 
         //GETTING THE OTHER VARIABLES
         _halfHeight = Camera.main.orthographicSize;

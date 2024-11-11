@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
-    private PlayerController _player; //REFERENCE TO THE PLAYER CONTROLLER SO THAT PLAYER'S MOVEMENT CAN BE DISABLED UPOON ENTERING A DOORWAY
+    private Player _player; //REFERENCE TO THE PLAYER CONTROLLER SO THAT PLAYER'S MOVEMENT CAN BE DISABLED UPOON ENTERING A DOORWAY
     private Transform _exitPoint; //POINT TO WHICH THE PLAYER IS BEING TRANSPORTED UPON GOING THROUGH A DOORWAY
 
     private void Awake() 
@@ -13,15 +13,14 @@ public class DoorController : MonoBehaviour
         _exitPoint = GameObject.Find("Exit Point").GetComponent<Transform>();
     }
 
-    //[SerializeField]
     private bool _playerExiting; //TRUE IF THE PLAYER IS ALREADY EXITING THROUGH A DOORWAY
-    public float movePlayerSpeed; //SPEED OF BEING TRANSPORTED THROUGH A DOORWAY
-    public string levelToLoad; //NAME OF A SCENE THAT IS BEING LOADED UPON EXITING THROUGH THIS DOORWAY
+    [SerializeField] private float _movePlayerSpeed; //SPEED OF BEING TRANSPORTED THROUGH A DOORWAY
+    [SerializeField] public string _levelToLoad; //NAME OF A SCENE THAT IS BEING LOADED UPON EXITING THROUGH THIS DOORWAY
 
     // Start is called before the first frame update
     void Start()
     {
-        _player = PlayerController.instance; //GETTING THE PLAYER SCRIPT REFERENCE
+        _player = Player.instance; //GETTING THE PLAYER SCRIPT REFERENCE
     }
 
     // Update is called once per frame
@@ -29,7 +28,7 @@ public class DoorController : MonoBehaviour
     {
         if(_playerExiting) //IF THE PLAYER IS EXITING, MOVE HIM FROM HIS CURRENT POSITION TOWARDS THE EXIT POINT AT SAID SPEED
         {
-            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _exitPoint.transform.position, movePlayerSpeed * Time.deltaTime);
+            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _exitPoint.transform.position, _movePlayerSpeed * Time.deltaTime);
         }
     }
 
@@ -62,6 +61,6 @@ public class DoorController : MonoBehaviour
 
         UIController.instance.StartFadeFromBlack(); //FADING BACK FROM BLACK
 
-        SceneManager.LoadScene(levelToLoad); //LAODING SAID SCENE USING SCENE MANAGER (UNITY BUILT IN FEATURE)
+        SceneManager.LoadScene(_levelToLoad); //LAODING SAID SCENE USING SCENE MANAGER (UNITY BUILT IN FEATURE)
     }
 }

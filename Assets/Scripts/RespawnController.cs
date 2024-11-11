@@ -21,10 +21,9 @@ public class RespawnController : MonoBehaviour
         }
     }
 
-    //[SerializeField]
+    [SerializeField] private float _waitToRespawn; //TIME THE PLAYER MUST WAIT FOR IN ORDER TO RESPAWN
+    [SerializeField] private GameObject _deathEffect; //EFFECT THAT IS BEING CREATED UPON THE PLAYER DYING
     private Vector3 _respawnPoint; //POINT AT WHICH THE PLAYER WILL RESPAWN AFTER DYING OR LOADING INTO ANOTHER SCENE
-    public float waitToRespawn; //TIME THE PLAYER MUST WAIT FOR IN ORDER TO RESPAWN
-    public GameObject deathEffect; //EFFECT THAT IS BEING CREATED UPON THE PLAYER DYING
 
     // Start is called before the first frame update
     void Start()
@@ -48,12 +47,12 @@ public class RespawnController : MonoBehaviour
     IEnumerator RespawnRoutine() //ROUTINE RESPONSIBLE FOR RESPAWNING THE PLAYER IN THE CORRECT POSITION
     {
         _player.SetActive(false); //DISABLE THE PLAYER GAME OBJECT UPON DYING
-        if(deathEffect) //CREATE A DEATH EFFECT AT THE PLAYER'S POSITION IF IT EXISTS
+        if(_deathEffect) //CREATE A DEATH EFFECT AT THE PLAYER'S POSITION IF IT EXISTS
         {
-            Instantiate(deathEffect, PlayerHealthController.instance.transform.position, Quaternion.identity);
+            Instantiate(_deathEffect, PlayerHealthController.instance.transform.position, Quaternion.identity);
         }
 
-        yield return new WaitForSeconds(waitToRespawn); //WAIT FOR TIME TO RESPAWN
+        yield return new WaitForSeconds(_waitToRespawn); //WAIT FOR TIME TO RESPAWN
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); //RELOAD CURRENT SCENE THROUGH SCENE MANAGER (UNITY BUILT IN FEATURE)
 
