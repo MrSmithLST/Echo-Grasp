@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _dashDuration;
     [SerializeField] private float _dashCooldown;
     [SerializeField] private float _dashFloatDuration;
-    [SerializeField] private float _dashTimer;
+    private float _dashTimer;
     private bool _dashedAirborne;
     private bool _triggerGravity;
     private float _gravityTimer;
