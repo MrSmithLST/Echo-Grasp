@@ -5358,7 +5358,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.42497402, g: 0.23325025, b: 0.6792453, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -6051,8 +6051,7 @@ MonoBehaviour:
   _dashSpeed: 50
   _dashDuration: 0.18
   _dashCooldown: 0.5
-  _dashFloatDuration: 0.015
-  _dashTimer: 0
+  _dashFloatDuration: 0.05
   _wallJumpDuration: 0.5
   _wallJumpForce: {x: 7, y: 14}
   _knockbackDuration: 0.65
@@ -6140,7 +6139,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612846450}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.01, y: -3.11, z: 0}
+  m_LocalPosition: {x: 1.01, y: -3.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
