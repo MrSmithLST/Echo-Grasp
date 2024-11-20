@@ -4,37 +4,37 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Player _player; //REFERENCE TO THE PLAYER SCRIPT
-    private BoxCollider2D _cameraBounds; //BOUNDS OF THE CAMERA MOVEMENT
+    private Player player; //REFERENCE TO THE PLAYER SCRIPT
+    private BoxCollider2D cameraBounds; //BOUNDS OF THE CAMERA MOVEMENT
 
     private void Awake() 
     {
-        _cameraBounds = GameObject.Find("Camera Bounds").GetComponent<BoxCollider2D>();    
+        cameraBounds = GameObject.Find("Camera Bounds").GetComponent<BoxCollider2D>();    
     }
 
     //[SerializeField]
-    private float _halfWidth, _halfHeight; //HALF WIDTH AND HALF HEIGHT OF THE CAMERA
+    private float halfWidth, halfHeight; //HALF WIDTH AND HALF HEIGHT OF THE CAMERA
 
     // Start is called before the first frame update
     void Start()
     {
         //SETTING THE STARTING POSITION OF THE CAMERA ON THE PLAYER
-        _player = Player.instance;
+        player = Player.instance;
 
         //GETTING THE OTHER VARIABLES
-        _halfHeight = Camera.main.orthographicSize;
-        _halfWidth = _halfHeight * Camera.main.aspect;
+        halfHeight = Camera.main.orthographicSize;
+        halfWidth = halfHeight * Camera.main.aspect;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
         //GETTING THE PLAYERS POSITION, ASIGNING IT TO THE CAMERA AND CLAMPING IT IN BOUNDS
-        if(_player)
+        if(player)
         {
             transform.position = new Vector3(
-                Mathf.Clamp(_player.transform.position.x, _cameraBounds.bounds.min.x + _halfWidth, _cameraBounds.bounds.max.x - _halfWidth),
-                Mathf.Clamp(_player.transform.position.y, _cameraBounds.bounds.min.y + _halfHeight, _cameraBounds.bounds.max.y - _halfHeight),
+                Mathf.Clamp(player.transform.position.x, cameraBounds.bounds.min.x + halfWidth, cameraBounds.bounds.max.x - halfWidth),
+                Mathf.Clamp(player.transform.position.y, cameraBounds.bounds.min.y + halfHeight, cameraBounds.bounds.max.y - halfHeight),
                 -10f //KEEPING THE CAMERA AWAY ON THE Z AXIS SO THAT IT CAN SEE THE SCENE AT ALL TIMES
             );
         }
