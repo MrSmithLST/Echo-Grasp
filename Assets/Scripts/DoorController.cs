@@ -10,9 +10,9 @@ public class DoorController : MonoBehaviour
 
     private void Awake() 
     {
-        Transform[] getExitPoints = GetComponentsInChildren<Transform>();
+        Transform[] getExitPoints = GetComponentsInChildren<Transform>(); // CREATING A LOCAL VARIABLE TO GET EVERY TRANSFORM IN THE GAME OBJECT, INCLUDING CHILDREN
 
-        exitPoint = getExitPoints[1];
+        exitPoint = getExitPoints[1]; //ASSIGNING THE SECOND TRANSFORM TO THE EXIT POINT VARIABLE, BECUASE THIS GAME OBJECT HAS ONE CHILDREN AND THE OBJECT OF INDEX 0 IS THE TRANSFORM OF PARRENT
     }
 
     private bool playerExiting; //TRUE IF THE PLAYER IS ALREADY EXITING THROUGH A DOORWAY

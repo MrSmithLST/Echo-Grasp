@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake() 
     {
+        //THERE IS EXACTLY ONE CAMERA BOUNDS IN EVERY SCENE, SO FIND IT AND ASSIGN IT TO OUR VARIABLE
         cameraBounds = GameObject.Find("Camera Bounds").GetComponent<BoxCollider2D>();    
     }
 

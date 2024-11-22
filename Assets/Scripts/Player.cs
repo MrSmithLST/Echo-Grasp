@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
         }
         
         //HANDLING EVERYTHING ELSE
-        HandleGravity(); //DONE
+        HandleGravity(); 
         HandleInput();
         HandleWallSlide();
         HandleMovement();

@@ -20,7 +20,7 @@ public class UIController : MonoBehaviour
             Destroy(gameObject); //DESTROY THIS OBJECT OTHERWISE TO NOT HAVE UNNECESSARY COPIES
         }
 
-        fadeScreen = GameObject.Find("Fade Screen").GetComponent<Image>();
+        fadeScreen = GameObject.Find("Fade Screen").GetComponent<Image>(); //FIND THE FADE SCREEN OBJECT
     }
 
     [SerializeField] private float fadeSpeed = 2f; //SPEED OF FADING INTO BACK AND BACK FROM IT
