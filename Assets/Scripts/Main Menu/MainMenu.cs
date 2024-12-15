@@ -27,6 +27,8 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.DeleteAll();
 
         SceneManager.LoadScene(newGameScene);
+
+        player.canMove = true;
     }
 
     public void QuitGame()
@@ -65,6 +67,7 @@ public class MainMenu : MonoBehaviour
             }
         }
 
+        player.canMove = true;
         SceneManager.LoadScene(PlayerPrefs.GetString("ContinueLevel"));
     }
 }

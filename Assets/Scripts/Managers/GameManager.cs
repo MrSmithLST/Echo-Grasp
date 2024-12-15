@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
         currentHealth = maxHealth; //ALWAYS START THE GAME WITH PLAYER'S HEALTH AT MAX
 
         player = Player.instance; //GETTING THE PLAYER REFERENCE
+        //player.SetActive(false);
         respawnPoint = player.gameObject.transform.position; //SETTING THE RESPAWN POINT TO THE CURRENT POSITION OF THE PLAYER ON START
         //ASSIGNING THOSE VARIABLES IN THE AWAKE IS IMPOSSIBLE, DUE TO THE FACT THAT AWAKE FUNCTIONS OF TWO SCRIPTS CAN BE EXECUTED IN AN UNEXPECTED ORDER
         playerSprites = player.gameObject.GetComponentsInChildren<SpriteRenderer>();
