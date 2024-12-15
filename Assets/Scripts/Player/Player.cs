@@ -6,6 +6,7 @@ using System.Threading;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -94,7 +95,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canMove = false; //PLAYER CAN ALWAYS MOVE AT THE START
+        if(SceneManager.GetActiveScene().name == "Main Menu")
+            canMove = false; //PLAYER CAN ALWAYS MOVE AT THE START
+        else
+            canMove = true;
     }
 
     // Update is called once per frame

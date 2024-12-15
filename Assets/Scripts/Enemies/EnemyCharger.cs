@@ -64,6 +64,7 @@ public class EnemyCharger : Enemy
     {
         anim.SetBool("hitWall", false);
         Invoke(nameof(Flip), 1);
+        Flip();
     }
 
     private void WallHit()
