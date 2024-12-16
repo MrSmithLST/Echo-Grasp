@@ -51,7 +51,7 @@ public class DoorController : MonoBehaviour
     {
         playerExiting = true; //SETTING THIS VARIABLE AS TRUE SO THAT THIS COROUTINE ISN'T STARTED EACH FRAME THE PLAYER IS EXITING
 
-        //player.StopResumeAnim(); //FREEZING PLAYER'S CURRENT SPRITE (DESIGN CHOICE, CAN BE CHANGED)
+        player.StopResumeAnim(); //FREEZING PLAYER'S CURRENT SPRITE (DESIGN CHOICE, CAN BE CHANGED)
 
         UIController.instance.StartFadeToBlack(); //CONTACTING THE UI CONTROLLER AND STARTING FADING TO BLACK
 
