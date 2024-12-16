@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canMove = false; //PLAYER CAN ALWAYS MOVE AT THE START
+        canMove = true; //PLAYER CAN ALWAYS MOVE AT THE START
     }
 
     // Update is called once per frame
@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
     {
         UpdateAirbornestatus();
 
-        if(isKnocked || !canMove) return; //IF THE PLAYER IS KNOCKED WE WANT TO CUT ALL THE INPUT
+        if(isKnocked) return; //IF THE PLAYER IS KNOCKED WE WANT TO CUT ALL THE INPUT
 
         if(isDashing) //SAME THING GOES FOR THE DASHING
         {
