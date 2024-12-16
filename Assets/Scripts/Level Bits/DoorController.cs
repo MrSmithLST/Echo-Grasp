@@ -61,6 +61,7 @@ public class DoorController : MonoBehaviour
         player.canMove = true; //UNFREEZING PLAYER'S MOVEMENT AND SPRITE
         PlayerPrefs.SetFloat("PositionX", player.transform.position.x);
         PlayerPrefs.SetFloat("PositionY", player.transform.position.y);
+        PlayerPrefs.SetString("ContinueLevel", levelToLoad);
         
         player.StopResumeAnim();
 
