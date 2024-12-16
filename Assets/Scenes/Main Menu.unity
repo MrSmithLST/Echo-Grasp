@@ -1604,9 +1604,9 @@ MonoBehaviour:
   invincibilityLength: 1
   flashLength: 0.13
   playerSprites: []
-  canDoubleJump: 1
-  canDash: 1
-  canWallJump: 1
+  canDoubleJump: 0
+  canDash: 0
+  canWallJump: 0
   waitToRespawn: 2.5
   deathEffect: {fileID: 0}
 --- !u!1 &3783225505054771259
