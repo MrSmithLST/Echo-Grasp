@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Echo-Grasp.sln"
+    "dotnet.defaultSolution": "Echo-Grasp.sln",
+    "FSharp.suggestGitignore": false
 }

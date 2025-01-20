@@ -128,18 +128,18 @@ public class Player : MonoBehaviour
 
     private void HandleEnemyDetection()
     {
-        if (rb.velocity.y >= 0) return;
+        if (rb.velocity.y >= 0) return; //ENABLE DAMAGING ENEMIES ONLY WHILE FALLING
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius, whatIsEnemy);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius, whatIsEnemy); //COLLECT ALL COLLIDERS AROUND THE DAMAGE POINT THAT ARE OF TYPE ENEMY
 
         foreach (var enemy in colliders)
         {
-            Enemy newEnemy = enemy.GetComponent<Enemy>();
+            Enemy newEnemy = enemy.GetComponent<Enemy>(); //GET THE ENEMY SCRIPT FROM THE COLLIDER
 
-            if(newEnemy)
+            if(newEnemy) //IF IT EXISTS
             {
-                newEnemy.Hit();
-                Jump();
+                newEnemy.Hit(); //DAMAGE THE ENEMY
+                Jump(); //AND PERFORM A JUMP
             }
         }
     }
@@ -149,12 +149,12 @@ public class Player : MonoBehaviour
 
     private IEnumerator PushRoutine(Vector2 direction, float duration = 0)
     {
-        canMove = false;
+        canMove = false; //DISABLE PALYER'S ABILITY TO MOVE SO THAT HE CAN BE MOVED
 
-        rb.velocity = Vector2.zero;
-        rb.AddForce(direction, ForceMode2D.Impulse);
+        rb.velocity = Vector2.zero; //REMOVE ANY CURRENT VELOCITYTO NOT INTERFERE WITH THE PUSH
+        rb.AddForce(direction, ForceMode2D.Impulse); //ADD AND IMPULSE FORCE TO THE RIGID BODY IN THE SAID DIRECTION AND MODE
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(duration); //WAIT FOR THE PLAYER TO BE PUSHED AND UNBLOCK HIS MOVEMENT
 
         canMove = true;
     }

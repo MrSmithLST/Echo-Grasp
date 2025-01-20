@@ -6,21 +6,20 @@ public class EnemyPhaser : Enemy
 {
 
     [Header("Phaser")]
-    [SerializeField] private float timeToAppear;
-    [SerializeField] private float activeDuration;
+    [SerializeField] private float timeToAppear; //TIME BEFORE APPEARING AFTER ENTERING THE ROOM
+    [SerializeField] private float activeDuration; //CHASE DURATION
     [Space]
-    [SerializeField] private float xMinDistance;
-    [SerializeField] private float yMinDistance;
-    [SerializeField] private float yMaxDistance;
-
+    [SerializeField] private float xMinDistance; //X BOUNDS OF SPAWN
+    [SerializeField] private float yMinDistance; //Y BOUNDS OF SPAWN
+    [SerializeField] private float yMaxDistance; //Y BOUNDS OF SPAWN
     
-    private float activeTimer;
-    private bool isChasing;
-    private Transform target;
+    private float activeTimer; //USED TO COUNT DOWN THE CHASE DURATION
+    private bool isChasing; //USED TO DETERMINE THE CURRENT STATE
+    private Transform target; //TARGET TO CHASE
 
     protected override void Start()
     {
-        ObjectCreator.instance.WakeMeUp(this.gameObject, timeToAppear);
+        ObjectCreator.instance.WakeMeUp(this.gameObject, timeToAppear); //CONTCT OBJECT CREATOR TO REMAIN DORMANT UNTILL APPEARING
         base.Start();
     }
 
@@ -35,13 +34,13 @@ public class EnemyPhaser : Enemy
 
         if(isDead) return;
 
-        activeTimer -= Time.deltaTime;
+        activeTimer -= Time.deltaTime; //COUND DOWN THE CHASE DURATION
 
-        if(!isChasing && idleTimer < 0)
+        if(!isChasing && idleTimer < 0) //IF ABLE TO CHASE
         {
             StartChase();
         }
-        else if(isChasing && activeTimer < 0)
+        else if(isChasing && activeTimer < 0) //IF TIMER HAS RAN OUT
         {
             EndChase();
         }
@@ -53,44 +52,44 @@ public class EnemyPhaser : Enemy
     {
         if(!canMove) return;
 
-        HandleFlip(target.position.x);
-        transform.position = Vector2.MoveTowards(transform.position, target.position, movementSpeed * Time.deltaTime);
+        HandleFlip(target.position.x); //FLIP ACCORDING TO TARGET POSITION
+        transform.position = Vector2.MoveTowards(transform.position, target.position, movementSpeed * Time.deltaTime); //SIMPLY MOVE TOWARDS TARGET'S POSITION
     }
 
     private void StartChase()
     {
-        if(!GameManager.instance.player)
+        if(!GameManager.instance.player) //IF THERE IS NO PLAYER TO CHASE, SIMPLY DON'T DUH
         {
             EndChase();
             return;
         }
 
-        target = GameManager.instance.player.transform;
+        target = GameManager.instance.player.transform; //SET TARGET TO PLAYER IF THERE IS ONE
 
-        float yPosition = Random.Range(yMinDistance, yMaxDistance);
-        float xOffset = Random.Range(0,10) < 5 ? 1 : -1;
+        float yPosition = Random.Range(yMinDistance, yMaxDistance); //SET RAMDP, SPAWN POSITION WITHIN Y BOUNDS
+        float xOffset = Random.Range(0,10) < 5 ? 1 : -1; //CHOSE RANDOM SIDE TO SPAWN
 
-        transform.position = target.position + new Vector3(xMinDistance * xOffset, yPosition);
+        transform.position = target.position + new Vector3(xMinDistance * xOffset, yPosition); //SPAWN AT RANDOM POSITION NEAR THE TARGET
 
-        activeTimer = activeDuration;
-        isChasing = true;
+        activeTimer = activeDuration; //SET CHASE DURATION
+        isChasing = true; //CHANGE STATE TO CHASING
         //anim.SetTrigger("appear");
-        MakeVisible();
+        MakeVisible(); //TURN ON SPRITES
 
     }
 
     private void EndChase()
     {
-        idleTimer = idleDuration;
-        isChasing = false;
+        idleTimer = idleDuration; //SET TIME TO REMAIN DORMANT
+        isChasing = false; //CHANGE STATE TO IDLE
         //anim.SetTrigger("disappear");
-        MakeInvisible();
+        MakeInvisible(); //TURN OF SPRITES
     }
 
     private void MakeInvisible() 
     {
         sr.color = Color.clear;
-        EnableColliders(false);
+        EnableColliders(false); //DISABLE COLLIDERS TO AVOID UNWANTED COLLISIONS
     }
 
     private void MakeVisible() 
@@ -103,7 +102,7 @@ public class EnemyPhaser : Enemy
     {
         base.Die();
 
-        canMove = false;
+        canMove = false; //PREVENT TELEOPRTING TO THE PLAYER AFTER DEATH
     }
 
 }

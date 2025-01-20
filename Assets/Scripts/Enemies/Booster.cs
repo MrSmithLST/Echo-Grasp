@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Booster : MonoBehaviour
 {
-    [SerializeField] private float _pushPower;
-    [SerializeField] private float _duration = .5f;
+    [SerializeField] private float pushPower; //POWER OF THE BOOSTER
+    [SerializeField] private float duration = .5f; //DURATION OF BLOCKING THE PLAYER'S MOVEMENT
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Player player = other.GetComponent<Player>();
+        Player player = other.GetComponent<Player>(); //IF THE PLAYER GET'S IN CONTACT WITH THE BOOSTER
 
         if(player)
-            player.Push(transform.up * _pushPower, _duration);
+            player.Push(transform.up * pushPower, duration); //BOOST HIM IN THE DIRECTION OF THE BOOSTER
         
     }
 }
