@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string newGameScene;
+    //public string newGameScene;
 
     public GameObject continueButton;
 
@@ -26,7 +26,9 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
 
-        SceneManager.LoadScene(newGameScene);
+        SceneManager.LoadScene(1);
+
+        player.transform.position = new Vector3(26, 9, 0);
     }
 
     public void QuitGame()
